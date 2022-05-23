@@ -1,1 +1,6 @@
-# Localization_of_Concept_Drift
+# Localization of Concept Drift: Identifying the Drifting Datapoints [1]
+
+The notion of concept drift refers to the phenomenon that the distribution which is underlying the observed data changes over time. As a consequence machine learning models may become inaccurate and need adjustment. While there do exist methods to detect concept drift, to find change points in data streams, or to adjust models in the presence of observed drift, the problem of localizing drift, i.e. identifying it in data space, is yet widely unsolved -- in particular from a formal perspective. This problem however is of importance, since it enables an inspection of the most prominent characteristics, e.g. features, where drift manifests itself and can therefore be used to make informed decisions, e.g. efficient updates of the training set of online learning algorithms, and perform precise adjustments of the learning model. In this paper we present a general theoretical framework that reduces drift localization to a supervised machine learning problem. We construct a new method for drift localization thereon and demonstrate the usefulness of our theory and the performance of our algorithm by comparing it to other methods from the literature. 
+
+
+* [1]: TODO CITE
