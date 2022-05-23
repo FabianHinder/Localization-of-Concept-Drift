@@ -1,5 +1,6 @@
 import numpy as np
 from generate_datasets import load_data as load
+from generate_datasets import load_mnist
 from joblib import delayed, Parallel
 import json
 from ref_methods import kdqtree, LDD, knn_post_hoc
@@ -63,6 +64,7 @@ if __name__ == "__main__":
                 setup_descs.append( (split,itr,add_dim,dataset) )
                 split += 1
     
+    load_mnist()
     print( *("split","itr","dataset","method","ACC","F1","MCC","MODEL_ACC","MODEL_NLL","MODEL_TV"), sep=";")
     results = Parallel(n_jobs=-2)(delayed(lambda split,itr,add_dim,dataset: {"split": split, "itr": itr, "additional_dimensions": add_dim, "dataset": dataset, "results": run_experiment(split,itr,dataset,add_dim)})(split,itr,add_dim,dataset) for split,itr,add_dim,dataset in setup_descs)
     

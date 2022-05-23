@@ -1,4 +1,6 @@
 from asyncio.log import logger
+from glob import glob
+from multiprocessing.sharedctypes import Value
 import numpy as np
 import random
 from sklearn.datasets import make_blobs, fetch_openml
@@ -77,6 +79,16 @@ def generate_chess(n, m, select, samps_per_clust, add_dim):
     y_type = np.array(y_type)
     return generate_dataset(X,y_type,add_dim)
 
+def load_mnist():
+    try:
+        X,y = np.load("MNIST_X.npy"),np.load("MNIST_y.npy", allow_pickle=True).astype(int)
+    except:
+        logger.warning("Failed to load local copy of MNIST. Try to fatch...")
+        X,y=fetch_openml('mnist_784', version=1, return_X_y=True)
+        np.save("MNIST_X", X)
+        np.save("MNIST_y", y)
+    return X,y
+
 """
 Generates dataset as specified by dataset_name.
 """
@@ -95,11 +107,7 @@ def load_data(dataset_name, n_additional_noise_dimensions):
             else:
                 raise ValueError("Not found: "+str(dataset_name))
         elif dataset_name == "MNIST":
-            try:
-                X,y=fetch_openml('mnist_784', version=1, return_X_y=True)
-            except:
-                logger.info("Failed to fetch MNIST. Try to load local copy...")
-                X,y = np.load("MNIST_X.npy"),np.load("MNIST_y.npy", allow_pickle=True).astype(int)
+            X,y = load_mnist()
         else:
             raise ValueError("Not found: "+str(dataset_name))
         
